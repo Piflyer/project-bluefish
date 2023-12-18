@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-performance.js"></script>
+    <script type="text/javascript">
+    'use strict';
+    var firebaseConfig = {
+      apiKey: "",
+      authDomain: "",
+      projectId: "",
+      storageBucket: "",
+      messagingSenderId: "",
+      appId: ""
+    };
+    firebase.initializeApp(firebaseConfig);
+    firebase.performance();
+    var db = firebase.firestore();
+    let stringid = Math.random().toString(36).substring(7);
+    console.oldLog = console.log;
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <meta name="description" content="Learn more about what we do at the Boston Latin Electronics club. Come and see some of our 3D models.">
+    <title>Project Bluefish Lite Edition</title>
+    <style media="screen">
+    html, body {
+      background: #1c1c1c;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+      a-scene {
+        z-index: 9;
+      }
+      .cardcont {
+        height: 35vh;
+        width: auto;
+        min-width: calc(100vw + 700px);
+        max-height: 315px;
+        bottom: 0;
+        position: absolute;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        z-index: 400;
+      }
+      .card {
+        box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2);
+        transition: 0.25s;
+        width: auto;
+        flex: 0 0 auto;
+        display: inline-block;
+        background: #1c1c1c;
+        max-width: 450px;
+        border-radius: 20px;
+        margin-right: 15px;
+        margin-left: 15px;
+        padding-tOP: 5px;
+        height: calc(100%  - 75px);
+        margin-top: calc(75px/2);
+        transition: all .2s ease-in-out;
+      }
+      h1 {
+        position: relative;
+        color: white;
+        margin: 15px;
+        font-size: 35px;
+        text-decoration: none;
+      }
+      h2 {
+        position: relative;
+        color: #dbdbdb;
+        margin-left: 15px;
+        margin-right: 15px;
+        margin-top: 10px;
+        font-size: 22.5px;
+        line-height: 35px;
+        text-decoration: none;
+      }
+      h3 {
+        position: relative;
+        color: #dbdbdb;
+        margin-left: 15px;
+        margin-right: 15px;
+        margin-top: -10px;
+        font-size: 20px;
+        line-height: 35px;
+        text-decoration: none;
+      }
+      .card:hover {
+         transform: scale(1.05);
+         box-shadow: 0 20px 40px 0 rgba(0,0,0,0.2);
+
+      }
+      .cardend {
+        flex: 0 0 auto;
+        width: 700px;
+        height: 10px;
+      }
+      .fullscreenbtn {
+        font-family: 'Material Icons';
+          font-weight: normal;
+          font-style: normal;
+          font-size: 27.5px;  /* Preferred icon size */
+          line-height: 30px;
+          text-transform: none;
+          letter-spacing: normal;
+          word-wrap: normal;
+          white-space: nowrap;
+          direction: ltr;
+          width: 30px;
+          margin-left: auto;
+          margin-right: auto;
+          height: 30px;
+          margin-bottom: 15px;
+          transition: all .2s ease-in-out;
+          text-align: center;
+          background: inherit;
+          border-radius: 6px;
+          color: white;
+          margin-top: -20px;
+          -webkit-font-smoothing: antialiased;
+          text-rendering: optimizeLegibility;
+          -moz-osx-font-smoothing: grayscale;
+          font-feature-settings: 'liga';
+        }
+      .fullscreenbtn:hover {
+        background: rgba(0, 0, 0, 0.25);
+        animation-duration: 1s;
+        animation-timing-function: ease;
+      }
+      .fullscreenbtn:active {
+        background: rgba(0, 0, 0, 0.35);
+        animation-duration: 1s;
+        animation-timing-function: ease;
+      }
+      .signout {
+        height: 35px;
+        background: #ed0008;
+        width: 155px;
+        color: #dbdbdb;
+        font-size: 27.5px;
+        font-weight: 700;
+        margin-left: auto;
+        border-radius: 15px;
+        margin-right: auto;
+        display: block;
+        outline: none;
+        line-height: 35px;
+        border: none;
+        text-align: center;
+      }
+      .signinoverlay {
+        backdrop-filter: blur(10px);
+        height: 100vh;
+        width: 100vw;
+        top: 0;
+        right: 0;
+        position: fixed;
+        z-index: 800;
+      }
+      .signincard {
+        height: 500px;
+        width: 400px;
+        background: #1c1c1c;
+        box-shadow: 0 30px 60px 0 rgba(0,0,0,0.2);
+        position: absolute;
+        top: 50%;
+        border-radius: 15px;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+      input {
+        border-radius: 3px;
+        background: #1c1c1c;
+        box-shadow: inset 6px 6px 12px #121212,
+                    inset -6px -6px 12px #262626;
+        height: 30px;
+        border: none;
+        outline: none;
+        display: block;
+        width: calc(100% - 40px);
+        border-radius: 10px;
+        margin-left: 10px;
+        margin-top: 20px;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 20px;
+        color: grey;
+      }
+      .signinbutton {
+        width: 100px;
+        display: block;
+        border: none;
+        outline: none;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        height: 40px;
+        background-color: #009e52;
+        border-radius: 15px;
+        box-shadow: 0px 20px 70px rgb(0 158 82 / 30%);
+        font-size: 20px;
+        line-height: 40px;
+        color: white;
+      }
+      hr {
+        border: 3px solid #dbdbdb;
+        border-radius: 5px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 15px;
+      }
+      #wrongemail {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 9999;
+        cursor: pointer;
+      }
+      #passwordsuccess {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 9999;
+        cursor: pointer;
+      }
+      #passwordwrong {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 9999;
+        cursor: pointer;
+      }
+      #idcard {
+        position: fixed;
+        display: block;
+        top: 25px;
+        left: 25px;
+
+      }
+      .cardoverlay {
+        height: auto;
+        position: absolute;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 92.5vw;
+        background: #1c1c1c;
+        border-radius: 20px;
+        padding-top: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 15px;
+        min-width: calc(92.5vw - 50px;);
+        max-width: 1000px;
+        box-shadow: 0 30px 60px 0 rgba(0,0,0,0.2);
+      }
+      p {
+        color: #f0f0f0;
+        font-size: 20px;
+        margin-top: -5px;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+      #idcard {
+        position: fixed;
+        display: block;
+        top: 25px;
+        left: 25px;
+        height: 45px;
+        width: 155px;
+        font-size: 35px;
+        line-height: 45px;
+        border-radius: 15px;
+        background: white;
+        text-align: center;
+        color: black;
+        z-index: 996;
+      }
+      .onboardcard {
+        height: 80vh;
+        width: 80vw;
+        box-shadow: 0px 30px 70px rgb(255 255 255 / 10%);
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10vh;
+        background: #1c1c1c;
+        border-radius: 35px;
+      }
+      .onboardcard h1 {
+        font-size: 35px;
+        margin-left: 25px;
+        padding-top: 15px;
+        color: white;
+        z-index: 1500;
+      }
+      .onboardcard h2 {
+        font-size: 35px;
+        top: 15px;
+        color: white;
+        position: relative
+      }
+      .onboardcard h3 {
+        font-size: 25px;
+        font-weight: 500;
+        top: 15px;
+        color: white;
+        position: relative
+      }
+      .onboardcard p {
+        font-size: 20px;
+        top: 35px;
+        color: white;
+        position: relative
+      }
+      .contentcont {
+        height: 75%;
+        max-width: 700px;
+        width: 80%;
+        padding-top: 35px;
+        border-radius: 15px;
+        text-align: center;
+        vertical-align: middle;
+        margin-left: auto;
+        margin-right: auto;
+        background: #1c1c1c;
+        position: relative;
+        z-index: 1500;
+      }
+      .continue {
+        border: none;
+        border-radius: 15px;
+        width: 145px;
+        height: 45px;
+        background: #0099ff;
+        font-weight: 500;
+        color: white;
+        font-size: 27.5px;
+        line-height: 45px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        outline: none;
+        margin-left: auto;
+        margin-right: auto;
+        bottom: 20px;
+        cursor: pointer;
+      }
+      .continue:disabled, button[disabled] {
+        border: none;
+        border-radius: 15px;
+        width: 145px;
+        height: 45px;
+        background: #f56942;
+        font-weight: 500;
+        color: #ff9578;
+        font-size: 27.5px;
+        line-height: 45px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        outline: none;
+        margin-left: auto;
+        margin-right: auto;
+        bottom: 20px;
+        cursor: pointer;
+      }
+      .onboardcont {
+        z-index: 1400;
+        height: 100vh;
+        width: 100vw;
+        background: #1c1c1c;
+        overflow: none;
+        display: block;
+        position: fixed;
+      }
+      button {
+        cursor: pointer;
+      }
+      #splash {
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  width: 200px;
+  height: 200px;
+
+  margin: auto;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 0.25rem solid rgba(255, 255, 255, 0.2);
+  border-top-color: white;
+  animation: spin 1s infinite linear;
+}
+    </style>
+  </head>
+  <body>
+    <div hidden class="signinoverlay" id="signincont">
+      <div class="signincard">
+        <h1>Project <b style="color:#0099ff;">Bluefish</b> Lite</h1>
+        <h2>Sign in </h2>
+        <input type="email" id="email" name="" value="" placeholder="Email">
+        <input style="margin-top: 20px;" id="password" type="password" name="" value="" placeholder="Password">
+        <button class="signinbutton"type="submit" id="signinbutton" name="button">Sign In</button>
+        <hr>
+        <h2>Reset Password</h2>
+        <input type="email" id="emailreset" name="" value="" placeholder="Email">
+        <button class="signinbutton"type="submit" id="reset" name="button">Reset</button>
+      </div>
+    </div>
+    <a-scene renderer="precision: mediump; colorManagement: true;"  vr-mode-ui="enabled: false" gltf-model="dracoDecoderPath: https://www.gstatic.com/draco/v1/decoders/" loading-screen="dotsColor: white; backgroundColor: #1c1c1c">
+      <a-entity id="modele" shadow="cast: false" cube-env-map="path: cubemap/; extension: jpg; reflectivity: 0.99;"></a-entity>
+      <a-entity gltf-model="groundnav.glb" nav-mesh position="0 0 0" visible="false" shadow="cast: false"></a-entity>
+    <a-entity id="rig" movement-controls="constrainToNavMesh: true" position="24.85 0 -51.43" speed="0.15">
+  <a-entity camera
+            position="0 1.8 0"
+            look-controls="pointerLockEnabled: false">
+    <a-cursor nav-pointer
+              raycaster="objects: [nav-mesh]"></a-cursor>
+  </a-entity>
+</a-entity>
+</a-scene>
+<!--<div id="splash">
+  <div class="loading"></div>
+</div> -->
+<div id="wrongemail" onclick="off1()">
+  <div class="cardoverlay">
+    <h1>Uh Oh!</h1>
+    <p>The email that you have provided is not found. Please try a different email. Click anywhere on this overlay to dismiss.</p>
+  </div>
+</div>
+<div id="passwordsuccess" onclick="off2()">
+  <div class="cardoverlay">
+    <h1>Yay!</h1>
+    <p>Your password was succesfully reseted!</p>
+  </div>
+</div>
+<div id="passwordwrong" onclick="off3()">
+  <div class="cardoverlay">
+    <h1>Uh Oh!</h1>
+    <p>The credentials you entered could not be found. Please try again.</p>
+  </div>
+</div>
+<script>
+console.timeEnd();
+document.addEventListener('DOMContentLoaded', function() {
+    var scene = document.querySelector('a-scene');
+    var splash = document.querySelector('#splash');
+    scene.addEventListener('loaded', function (e) {
+        console.log('Aframe finished');
+        splash.style.display = 'none';
+    });
+});
+function off1() {
+  document.getElementById("wrongemail").style.display = "none";
+  console.log('closed wrongemail a');
+}
+function off2() {
+  document.getElementById("passwordsuccess").style.display = "none";
+  console.log('closed password reset a');
+}
+function off3() {
+  document.getElementById("passwordwrong").style.display = "none";
+  console.log('closed wrong password');
+}
+function on1() {
+  document.getElementById("wrongemail").style.display = "block";
+  console.log('Wrong Email a');
+}
+function on2() {
+  document.getElementById("passwordsuccess").style.display = "block";
+  console.log('Password Reset worked!');
+  document.getElementById("btn4").disabled = false;
+}
+function on3() {
+  document.getElementById("passwordwrong").style.display = "block";
+  console.log('Wrong password');
+}
+function signin() {
+var email = document.getElementById("email").value;
+var password = document.getElementById("password").value;
+firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((user) => {
+    console.log('signed in as ' + email);
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.error(errorCode);
+    console.error(errorMessage);
+   on3();
+  });
+  }
+function signout() {
+  firebase.auth().signOut();
+  console.log('requested signout');
+}
+function initFirebaseAuth() {
+  firebase.auth().onAuthStateChanged(authStateObserver);
+}
+function getUserName() {
+  return firebase.auth().currentUser.email;
+}
+function isUserSignedIn() {
+  return !!firebase.auth().currentUser;
+}
+function sendPasswordReset() {
+  var resetemail = document.getElementById("emailreset").value;
+  firebase.auth().sendPasswordResetEmail(resetemail)
+    .then(() => {
+     on2();
+     console.log('requested reset email is ' + resetemail);
+    })
+    .catch((error) => {
+      var errorCode1 = error.code;
+      var errorMessage2 = error.message;
+      console.error(errorCode1);
+      console.error(errorMessage2);
+      console.warn('wrong reset email is ' + resetemail);
+     on1();
+    });
+}
+function authStateObserver(user) {
+  if (user) {
+    document.getElementById('signincont').setAttribute('hidden', 'true');
+    gltfmodel();
+    console.log('user exists');
+  }
+  else {
+    document.getElementById('signincont').removeAttribute('hidden');
+    console.warn('user does not exist');
+  }
+}
+document.getElementById('reset').addEventListener('click', sendPasswordReset);
+document.getElementById('signinbutton').addEventListener('click', signin);
+initFirebaseAuth();
+function gltfmodel() {
+  var storage = firebase.storage();
+  var pathRef = storage.ref('gltf/groundlite.glb');
+  var gsRef = storage.refFromURL('gs://bucket/gltf/groundlite.glb');
+  var storageRef = firebase.storage().ref("gltf/groundlite.glb");
+  storageRef.getDownloadURL().then(function(url) {
+    var d = document.getElementById("modele");
+    d.setAttribute("gltf-model", url);
+    console.log('endpointloaded');
+  });
+}
+</script>
+  </body>
+</html>

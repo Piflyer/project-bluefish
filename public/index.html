@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project Bluefish</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style media="screen">
+      html, body {
+        background: #1c1c1c;
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+      }
+
+      .header {
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        width: 92.5vw;
+        margin-top: 15px;
+        background: #0099ff;
+        border-radius: 20px;
+        padding: 10px;
+        top: 5px;
+        padding: 5px;
+        min-width: calc(92.5vw - 50px;);
+        max-width: 1500px;
+        box-shadow: 0px 20px 70px rgb(0 153 255 / 30%);
+      }
+      h1 {
+        position: relative;
+        color: white;
+        margin-left: 5px;
+        font-size: 35px;
+        text-decoration: none;
+      }
+      h2 {
+        position: relative;
+        color: white;
+        margin-left: 5px;
+        font-size: 1em;
+        text-decoration: none;
+      }
+      .card {
+        height: auto;
+        margin-top: 35px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 92.5vw;
+        background: #1c1c1c;
+        border-radius: 20px;
+        padding-top: 15px;
+        padding-left: 10px;
+        border: none;
+        display: block;
+        outline:none;
+        padding-right: 10px;
+        padding-bottom: 15px;
+        min-width: calc(92.5vw - 50px;);
+        max-width: 1500px;
+        box-shadow: 0px 20px 70px rgb(255 255 255 / 10%);
+      }
+      .imagecard {
+        height: calc(100vh - 100px);
+        margin-top: 35px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 92.5vw;
+        background: url('blsrender.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 20px;
+        padding-top: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 15px;
+        min-width: calc(92.5vw - 50px;);
+        max-width: 1500px;
+        box-shadow: 0px 20px 70px rgb(255 255 255 / 10%);
+      }
+      p {
+        color: #f0f0f0;
+        font-size: 20px;
+        margin-top: -5px;
+        font-weight: 500;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+      .landing{
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        background: url(blsrender.webp);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      a {
+        text-decoration: none;
+        outline: none;
+      }
+      .onboardcard {
+        height: 80vh;
+        width: 80vw;
+        box-shadow: 0px 30px 70px rgb(255 255 255 / 10%);
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10vh;
+        background: #1c1c1c;
+        border-radius: 35px;
+      }
+      .onboardcard h1 {
+        font-size: 35px;
+        margin-left: 25px;
+        padding-top: 15px;
+        color: white;
+        z-index: 1500;
+      }
+      .onboardcard h2 {
+        font-size: 35px;
+        top: 15px;
+        color: white;
+        position: relative
+      }
+      .onboardcard h3 {
+        font-size: 25px;
+        font-weight: 500;
+        top: 15px;
+        color: white;
+        position: relative
+      }
+      .onboardcard p {
+        font-size: 20px;
+        top: 35px;
+        color: white;
+        position: relative
+      }
+      .contentcont {
+        height: 75%;
+        max-width: 700px;
+        width: 80%;
+        padding-top: 35px;
+        border-radius: 15px;
+        text-align: center;
+        vertical-align: middle;
+        margin-left: auto;
+        margin-right: auto;
+        background: #1c1c1c;
+        position: relative;
+        z-index: 1500;
+      }
+      .continue {
+        border: none;
+        border-radius: 15px;
+        width: 145px;
+        height: 45px;
+        background: #0099ff;
+        font-weight: 500;
+        color: white;
+        font-size: 27.5px;
+        line-height: 45px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        outline: none;
+        margin-left: auto;
+        margin-right: auto;
+        bottom: 20px;
+        cursor: pointer;
+      }
+      .continue:disabled, button[disabled] {
+        border: none;
+        border-radius: 15px;
+        width: 145px;
+        height: 45px;
+        background: #f56942;
+        font-weight: 500;
+        color: #ff9578;
+        font-size: 27.5px;
+        line-height: 45px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        outline: none;
+        margin-left: auto;
+        margin-right: auto;
+        bottom: 20px;
+        cursor: pointer;
+      }
+      .onboardcont {
+        z-index: 100;
+        height: 100vh;
+        width: 100vw;
+        top: 0;
+        background: #1c1c1c;
+        overflow: none;
+        position: fixed;
+      }
+      button {
+        cursor: pointer;
+      }
+
+      input {
+        border-radius: 3px;
+        background: #1c1c1c;
+        box-shadow: inset 6px 6px 12px #121212,
+                    inset -6px -6px 12px #262626;
+        height: 30px;
+        border: none;
+        outline: none;
+        display: block;
+        width: calc(100% - 40px);
+        border-radius: 10px;
+        margin-left: 10px;
+        margin-top: 20px;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 20px;
+        color: grey;
+      }
+      .signinbutton {
+        width: 100px;
+        display: block;
+        border: none;
+        outline: none;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        height: 40px;
+        background-color: #009e52;
+        border-radius: 15px;
+        box-shadow: 0px 20px 70px rgb(0 158 82 / 30%);
+        font-size: 20px;
+        line-height: 40px;
+        color: white;
+      }
+      .liteorfull {
+        border: none;
+        border-radius: 15px;
+        width: 145px;
+        height: 45px;
+        background: #0099ff;
+        font-weight: 500;
+        color: white;
+        font-size: 27.5px;
+        line-height: 45px;
+        margin-left: auto;
+        margin-right: auto;
+        outline: none;
+        margin: 10px;
+        cursor: pointer;
+        display: inline-block;
+      }
+      .butcont {
+        width: 400px;
+        text-align: center;
+        height: 60px;
+        position: absolute;
+        left: 50%;
+        bottom: 20px;
+        transform: translate(-50%, -50%);
+      }
+      .cardoverlay {
+        height: auto;
+        position: absolute;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 92.5vw;
+        background: #1c1c1c;
+        border-radius: 20px;
+        padding-top: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 15px;
+        min-width: calc(92.5vw - 50px;);
+        max-width: 1000px;
+        box-shadow: 0 30px 60px 0 rgba(0,0,0,0.2);
+      }
+      #wrongemail {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 9999;
+        cursor: pointer;
+      }
+      #passwordsuccess {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 9999;
+        cursor: pointer;
+      }
+      #passwordwrong {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 9999;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="onboardcont" id="let" style="display: none;" onclick="close();">
+    <div class="onboardcard">
+      <h1>Project <b style="color: #0099ff;">Bluefish</b></h1>
+      <div class="contentcont" style="display: block;" id="content1">
+        <h2>Hi there, let's get started!</h2>
+        <button type="button" name="button" class="continue" id="btn1" onclick="page1();" style="display: inline-block;">Continue</button>
+      </div>
+      <div class="contentcont" style="display: none;" id="content2">
+        <h2><b style="color: #E16036;">Special Notice:</b></h2>
+        <p>Your computer may lag a bit with Project Bluefish. It is recommended that you wait for Project Bluefish to fully load before continuing.</p>
+        <button type="button" name="button" class="continue" id="btn2" onclick="page2();">Continue</button>
+      </div>
+      <div class="contentcont" style="display: none;" id="content3">
+        <h2><b>Browser Compatibility</b></h2>
+        <h3 id="browser"></h3>
+        <p>To get the best experinece, please use Chrome v86 or newer. Project Bluefish is optmized for Chrome.</p>
+        <button type="button" name="button" class="continue" id="browserbtn" onclick="page3();">Continue</button>
+      </div>
+      <div class="contentcont" style="display: none;" id="content4">
+        <h2><b>Create an Account</b></h2>
+        <input type="email" id="emailreset" name="" value="" placeholder="Email">
+        <button class="signinbutton"type="submit" id="reset" name="button">Generate</button>
+        <p>Create a Project Bluefish account. Enter in your email address, and check your email for a link to create a password. Return back to this page once you have successfully created a password.</p>
+        <button type="button" name="button" class="continue" id="btn4" onclick="page4();">Continue</button>
+      </div>
+      <div class="contentcont" style="display: none;" id="content5">
+        <h2><b>Select Your Version</b></h2>
+        <p>Project Bluefish has two versions. If you are using a school provided Chromebook or a low powered computer, please choose Project Bluefish Lite. If you are using a computer that you think is powerful enough to handle 3D models, then please choose Project Bluefish Full.</p>
+        <div class="butcont">
+          <button type="button" name="button" class="liteorfull" id="litebtn" onclick="litebtn();">Lite</button>
+          <button type="button" name="button" class="liteorfull" id="fullbtn" onclick="fullbtn();">Full</button>
+        </div>
+      </div>
+      <div class="contentcont" style="display: none;" id="lite">
+        <h2><b>All done!</b></h2>
+        <p>You have successfully created your Project Bluefish account! On the next page, you will sign into Project Bluefish with the credentials you have just created. It may take up to 5 minutes to load depending on your internet and your computer.</p>
+        <button type="button" name="button" class="continue" id="btn5" onclick="location.href='https://bluefish.blseclub.com/lite.html'">Let's Go!</button>
+      </div>
+      <div class="contentcont" style="display: none;" id="full">
+        <h2><b>All done!</b></h2>
+        <p>You have successfully created your Project Bluefish account! On the next page, you will sign into Project Bluefish with the credentials you have just created. It may take up to 5 minutes to load depending on your internet and your computer.</p>
+        <button type="button" name="button" class="continue" id="btn5" onclick="location.href='https://bluefish.blseclub.com/main.html'">Let's Go!</button>
+      </div>
+    </div>
+  </div>
+
+    <div class="imagecard">
+
+    </div>
+    <div class="header">
+      <h1>Electronics Club Exclusive</h1>
+    </div>
+    <div class="card">
+      <h1>Project <b style="color: #0099ff;">Bluefish</b></h1>
+      <p>Project Bluefish brings an immersive BLS experience from your browser. Explore BLS as you would in real life.</p>
+    </div>
+    <div class="card">
+      <h1>Made from scratch</h1>
+      <p>Project Bluefish was made with Blender, an open source 3D modeling software. This model was built from the ground up through reference photos, maps, and floorplans. With computer-aided design, we were able to recreate some of the most unique aspects of BLS.</p>
+    </div>
+    <div class="card">
+      <h1>Contact us</h1>
+      <p>Need help or want to say hi to Tim and Vivian? Email us at <a href = "mailto: bluefish@blseclub.com" style="color: #0099ff;">bluefish@blseclub.com</a></p>
+    </div>
+    <button class="card" style="background: #0099ff; text-align: left;" onclick="modal();">
+      <h1>Launch Project Bluefish</h1>
+      <p>Launch Project Bluefish to view and explore BLS.</p>
+    </button>
+    <pre> </pre>
+    <pre> </pre>
+    <div id="wrongemail" onclick="off1()">
+      <div class="cardoverlay">
+        <h1>Uh Oh!</h1>
+        <p>The email that you have provided is not found. Please try a different email. Click anywhere on this overlay to dismiss.</p>
+      </div>
+    </div>
+    <div id="passwordsuccess" onclick="off2()">
+      <div class="cardoverlay">
+        <h1>Yay!</h1>
+        <p>Your password was succesfully reseted!</p>
+      </div>
+    </div>
+    <div id="passwordwrong" onclick="off3()">
+      <div class="cardoverlay">
+        <h1>Uh Oh!</h1>
+        <p>The credentials you entered could not be found. Please try again.</p>
+      </div>
+    </div>
+    <pre> </pre>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-performance.js"></script>
+    <script type="text/javascript">
+    'use strict';
+    var firebaseConfig = {
+      apiKey: "",
+      authDomain: "",
+      projectId: "",
+      storageBucket: "",
+      messagingSenderId: "",
+      appId: ""
+    };
+    firebase.initializeApp(firebaseConfig);
+    firebase.performance();
+    function signin() {
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        console.log('signed in as ' + email);
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.error(errorCode);
+        console.error(errorMessage);
+       on3();
+      });
+      }
+    function close() {
+      document.getElementById("let").style.display = "none";
+    }
+    function signout() {
+      firebase.auth().signOut();
+      console.log('requested signout');
+    }
+    function initFirebaseAuth() {
+      firebase.auth().onAuthStateChanged(authStateObserver);
+    }
+    function getUserName() {
+      return firebase.auth().currentUser.email;
+    }
+    function isUserSignedIn() {
+      return !!firebase.auth().currentUser;
+    }
+    function sendPasswordReset() {
+      var resetemail = document.getElementById("emailreset").value;
+      firebase.auth().sendPasswordResetEmail(resetemail)
+        .then(() => {
+         on2();
+         console.log('requested reset email is ' + resetemail);
+        })
+        .catch((error) => {
+          var errorCode1 = error.code;
+          var errorMessage2 = error.message;
+          console.error(errorCode1);
+          console.error(errorMessage2);
+          console.warn('wrong reset email is ' + resetemail);
+         on1();
+        });
+    }
+    function authStateObserver(user) {
+      if (user) {
+        document.getElementById('signincont').setAttribute('hidden', 'true');
+        gltfmodel();
+        console.log('user exists');
+      }
+      else {
+        document.getElementById('signincont').removeAttribute('hidden');
+        console.warn('user does not exist');
+      }
+    }
+    var browserName;
+    var majorVersion;
+    function browser() {
+    if ((navigator.userAgent.indexOf("Chrome"))!=-1) {
+     browserName = "Chrome";
+     majorVersion = parseInt(''+navigator.userAgent.substring(navigator.userAgent.indexOf("Chrome")+7),10);
+    }
+    else {
+      browserName = "You are not using Chrome";
+      majorVersion = parseInt(''+navigator.userAgent.substring(navigator.userAgent.indexOf("Chrome")+7),10);
+      document.getElementById("browserbtn").disabled = true;
+    }
+
+
+    document.getElementById("browser").innerHTML = 'You are running: ' + browserName + ' ' + majorVersion;
+    document.getElementById("btn4").disabled = true;
+    }
+    function modal() {
+        document.getElementById("let").style.display = "block";
+        document.body.style.overflow = "hidden";
+        document.body.style.height = "100%";
+        document.getElementById("let").style.display = "block";
+    }
+    browser();
+    function page1() {
+      document.getElementById("content1").style.display = "none"
+      document.getElementById("content2").style.display = "block"
+      console.info('clickedbtn1');
+    }
+    function page2() {
+      document.getElementById("content2").style.display = "none"
+      document.getElementById("content3").style.display = "block"
+      console.info('clickedbtn2');
+    }
+    function page3() {
+      document.getElementById("content3").style.display = "none"
+      document.getElementById("content4").style.display = "block"
+      console.info('clickedbtn3');
+    }
+    function page4() {
+      document.getElementById("content4").style.display = "none"
+      document.getElementById("content5").style.display = "block"
+      console.info('clickedbtn4');
+    }
+    function litebtn() {
+      document.getElementById("content5").style.display = "none"
+      document.getElementById("lite").style.display = "block"
+      console.info('lite');
+    }
+    function fullbtn() {
+      document.getElementById("content5").style.display = "none"
+      document.getElementById("full").style.display = "block"
+      console.info('full');
+    }
+    function off1() {
+      document.getElementById("wrongemail").style.display = "none";
+      console.log('closed wrongemail a');
+    }
+    function off2() {
+      document.getElementById("passwordsuccess").style.display = "none";
+      console.log('closed password reset a');
+    }
+    function off3() {
+      document.getElementById("passwordwrong").style.display = "none";
+      console.log('closed wrong password');
+    }
+    function on1() {
+      document.getElementById("wrongemail").style.display = "block";
+      console.log('Wrong Email a');
+    }
+    function on2() {
+      document.getElementById("passwordsuccess").style.display = "block";
+      console.log('Password Reset worked!');
+      document.getElementById("btn4").disabled = false;
+    }
+    function on3() {
+      document.getElementById("passwordwrong").style.display = "block";
+      console.log('Wrong password');
+    }
+    document.getElementById('reset').addEventListener('click', sendPasswordReset);
+    document.getElementById('signinbutton').addEventListener('click', signin);
+    document.getElementById('signoutprompt').addEventListener('click', signout);
+    initFirebaseAuth();
+
+      </script>
+
+  </body>
+</html>
